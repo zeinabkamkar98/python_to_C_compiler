@@ -1,7 +1,14 @@
 %{
+
     #include <stdio.h>
+    #include <stdlib.h>
+    #include <string.h>
     #define border printf("\n--------------------------------------\n")
-    int yydebug =1;
+
+    extern int yylex();
+    void yyerror(char *msg) ;
+    int yywrap() ;
+    
 %}
 
 %token ID NUMBER STRING_LIT STRING_VAR 
@@ -14,14 +21,14 @@
 
 %%
 
-start : stmt SEMICOLON {printf("\n this is a valid python expression"); border; YYACCEPT; }
+start : stmt SEMICOLON {printf("\n this is a valid python expression"); border; }
 
 stmt: assign_arithmatic
     | assign_str
     | display
 
 identifier: ID
-    |keyword {yyerror("\nkeyword can't be used as a identifier"); YYABDET;}
+    |keyword {printf("error0");}
 
 keyword: PRINT
     | RARE
@@ -52,24 +59,20 @@ factor: identifier
     |NUMBER
 
 %%
-
-main(){
+void yyerror(char *msg)  {
+    fprintf(stderr,"%s\n",msg);
+    exit(1);
+}
+int yywrap(){
+    return (1);
+}
+int main(){
     printf("\n--------------------pthon exp parse --------------------\n");
     printf("enter python expression");
     return yyparse();
 
 
 }
-
-yyerror(s)
-{
-printf("\n------------error");
-border;
-}
-yywrap(){
-    return(1);
-}
-
 
 
 

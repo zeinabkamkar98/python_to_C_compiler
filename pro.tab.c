@@ -70,13 +70,20 @@
 /* Line 189 of yacc.c  */
 #line 1 "pro.y"
 
+
     #include <stdio.h>
+    #include <stdlib.h>
+    #include <string.h>
     #define border printf("\n--------------------------------------\n")
-    int yydebug =1;
+
+    extern int yylex();
+    void yyerror(char *msg) ;
+    int yywrap() ;
+    
 
 
 /* Line 189 of yacc.c  */
-#line 80 "pro.tab.c"
+#line 87 "pro.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -134,7 +141,7 @@ typedef int YYSTYPE;
 
 
 /* Line 264 of yacc.c  */
-#line 138 "pro.tab.c"
+#line 145 "pro.tab.c"
 
 #ifdef short
 # undef short
@@ -427,9 +434,9 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    17,    17,    19,    20,    21,    23,    24,    26,    27,
-      29,    31,    32,    33,    34,    35,    36,    38,    40,    41,
-      42,    43,    44,    45,    46,    48,    49,    51,    52
+       0,    24,    24,    26,    27,    28,    30,    31,    33,    34,
+      36,    38,    39,    40,    41,    42,    43,    45,    47,    48,
+      49,    50,    51,    52,    53,    55,    56,    58,    59
 };
 #endif
 
@@ -1357,21 +1364,21 @@ yyreduce:
         case 2:
 
 /* Line 1455 of yacc.c  */
-#line 17 "pro.y"
-    {printf("\n this is a valid python expression"); border; YYACCEPT; ;}
+#line 24 "pro.y"
+    {printf("\n this is a valid python expression"); border; ;}
     break;
 
   case 7:
 
 /* Line 1455 of yacc.c  */
-#line 24 "pro.y"
-    {yyerror("\nkeyword can't be used as a identifier"); YYABDET;;}
+#line 31 "pro.y"
+    {printf("error0");;}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 1375 "pro.tab.c"
+#line 1382 "pro.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1583,26 +1590,22 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 54 "pro.y"
+#line 61 "pro.y"
 
-
-main(){
+void yyerror(char *msg)  {
+    fprintf(stderr,"%s\n",msg);
+    exit(1);
+}
+int yywrap(){
+    return (1);
+}
+int main(){
     printf("\n--------------------pthon exp parse --------------------\n");
     printf("enter python expression");
     return yyparse();
 
 
 }
-
-yyerror(s)
-{
-printf("\n------------error");
-border;
-}
-yywrap(){
-    return(1);
-}
-
 
 
 
