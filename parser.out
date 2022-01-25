@@ -1,0 +1,1669 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> stmts
+Rule 1     stmts -> stmts stmt
+Rule 2     stmts -> empty
+Rule 3     stmt -> assignment
+Rule 4     stmt -> for
+Rule 5     stmt -> if
+Rule 6     stmt -> while
+Rule 7     stmt -> expression
+Rule 8     if -> IF expression COLON LBRACE stmts RBRACE elif
+Rule 9     elif -> ELIF expression COLON LBRACE stmts RBRACE elif
+Rule 10    elif -> else
+Rule 11    else -> ELSE COLON LBRACE stmts RBRACE
+Rule 12    else -> empty
+Rule 13    while -> WHILE expression COLON LBRACE stmts RBRACE
+Rule 14    for -> FOR ID IN RANGE LPAREN NUMBER RPAREN COLON LBRACE stmts RBRACE
+Rule 15    assignment -> ID ASSIGN expression
+Rule 16    expression -> expression PLUS term
+Rule 17    expression -> expression MINUS term
+Rule 18    expression -> expression GE term
+Rule 19    expression -> expression EQ term
+Rule 20    expression -> expression NE term
+Rule 21    expression -> expression LT term
+Rule 22    expression -> expression LE term
+Rule 23    expression -> expression GT term
+Rule 24    expression -> term
+Rule 25    term -> term TIMES factor
+Rule 26    term -> term DIVIDE factor
+Rule 27    term -> factor
+Rule 28    factor -> NUMBER
+Rule 29    factor -> ID
+Rule 30    factor -> LPAREN expression RPAREN
+Rule 31    empty -> <empty>
+
+Terminals, with rules where they appear
+
+ASSIGN               : 15
+COLON                : 8 9 11 13 14
+DIVIDE               : 26
+ELIF                 : 9
+ELSE                 : 11
+EQ                   : 19
+FOR                  : 14
+GE                   : 18
+GT                   : 23
+ID                   : 14 15 29
+IF                   : 8
+IN                   : 14
+LBRACE               : 8 9 11 13 14
+LE                   : 22
+LPAREN               : 14 30
+LT                   : 21
+MINUS                : 17
+NE                   : 20
+NUMBER               : 14 28
+PLUS                 : 16
+RANGE                : 14
+RBRACE               : 8 9 11 13 14
+RPAREN               : 14 30
+TIMES                : 25
+WHILE                : 13
+error                : 
+
+Nonterminals, with rules where they appear
+
+assignment           : 3
+elif                 : 8 9
+else                 : 10
+empty                : 2 12
+expression           : 7 8 9 13 15 16 17 18 19 20 21 22 23 30
+factor               : 25 26 27
+for                  : 4
+if                   : 5
+stmt                 : 1
+stmts                : 1 8 9 11 13 14 0
+term                 : 16 17 18 19 20 21 22 23 24 25 26
+while                : 6
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . stmts
+    (1) stmts -> . stmts stmt
+    (2) stmts -> . empty
+    (31) empty -> .
+
+    ID              reduce using rule 31 (empty -> .)
+    FOR             reduce using rule 31 (empty -> .)
+    IF              reduce using rule 31 (empty -> .)
+    WHILE           reduce using rule 31 (empty -> .)
+    NUMBER          reduce using rule 31 (empty -> .)
+    LPAREN          reduce using rule 31 (empty -> .)
+    $end            reduce using rule 31 (empty -> .)
+
+    stmts                          shift and go to state 1
+    empty                          shift and go to state 2
+
+state 1
+
+    (0) S' -> stmts .
+    (1) stmts -> stmts . stmt
+    (3) stmt -> . assignment
+    (4) stmt -> . for
+    (5) stmt -> . if
+    (6) stmt -> . while
+    (7) stmt -> . expression
+    (15) assignment -> . ID ASSIGN expression
+    (14) for -> . FOR ID IN RANGE LPAREN NUMBER RPAREN COLON LBRACE stmts RBRACE
+    (8) if -> . IF expression COLON LBRACE stmts RBRACE elif
+    (13) while -> . WHILE expression COLON LBRACE stmts RBRACE
+    (16) expression -> . expression PLUS term
+    (17) expression -> . expression MINUS term
+    (18) expression -> . expression GE term
+    (19) expression -> . expression EQ term
+    (20) expression -> . expression NE term
+    (21) expression -> . expression LT term
+    (22) expression -> . expression LE term
+    (23) expression -> . expression GT term
+    (24) expression -> . term
+    (25) term -> . term TIMES factor
+    (26) term -> . term DIVIDE factor
+    (27) term -> . factor
+    (28) factor -> . NUMBER
+    (29) factor -> . ID
+    (30) factor -> . LPAREN expression RPAREN
+
+    ID              shift and go to state 9
+    FOR             shift and go to state 10
+    IF              shift and go to state 13
+    WHILE           shift and go to state 14
+    NUMBER          shift and go to state 12
+    LPAREN          shift and go to state 11
+
+    stmt                           shift and go to state 3
+    assignment                     shift and go to state 4
+    for                            shift and go to state 5
+    if                             shift and go to state 6
+    while                          shift and go to state 7
+    expression                     shift and go to state 8
+    term                           shift and go to state 15
+    factor                         shift and go to state 16
+
+state 2
+
+    (2) stmts -> empty .
+
+    ID              reduce using rule 2 (stmts -> empty .)
+    FOR             reduce using rule 2 (stmts -> empty .)
+    IF              reduce using rule 2 (stmts -> empty .)
+    WHILE           reduce using rule 2 (stmts -> empty .)
+    NUMBER          reduce using rule 2 (stmts -> empty .)
+    LPAREN          reduce using rule 2 (stmts -> empty .)
+    $end            reduce using rule 2 (stmts -> empty .)
+    RBRACE          reduce using rule 2 (stmts -> empty .)
+
+
+state 3
+
+    (1) stmts -> stmts stmt .
+
+    ID              reduce using rule 1 (stmts -> stmts stmt .)
+    FOR             reduce using rule 1 (stmts -> stmts stmt .)
+    IF              reduce using rule 1 (stmts -> stmts stmt .)
+    WHILE           reduce using rule 1 (stmts -> stmts stmt .)
+    NUMBER          reduce using rule 1 (stmts -> stmts stmt .)
+    LPAREN          reduce using rule 1 (stmts -> stmts stmt .)
+    $end            reduce using rule 1 (stmts -> stmts stmt .)
+    RBRACE          reduce using rule 1 (stmts -> stmts stmt .)
+
+
+state 4
+
+    (3) stmt -> assignment .
+
+    ID              reduce using rule 3 (stmt -> assignment .)
+    FOR             reduce using rule 3 (stmt -> assignment .)
+    IF              reduce using rule 3 (stmt -> assignment .)
+    WHILE           reduce using rule 3 (stmt -> assignment .)
+    NUMBER          reduce using rule 3 (stmt -> assignment .)
+    LPAREN          reduce using rule 3 (stmt -> assignment .)
+    $end            reduce using rule 3 (stmt -> assignment .)
+    RBRACE          reduce using rule 3 (stmt -> assignment .)
+
+
+state 5
+
+    (4) stmt -> for .
+
+    ID              reduce using rule 4 (stmt -> for .)
+    FOR             reduce using rule 4 (stmt -> for .)
+    IF              reduce using rule 4 (stmt -> for .)
+    WHILE           reduce using rule 4 (stmt -> for .)
+    NUMBER          reduce using rule 4 (stmt -> for .)
+    LPAREN          reduce using rule 4 (stmt -> for .)
+    $end            reduce using rule 4 (stmt -> for .)
+    RBRACE          reduce using rule 4 (stmt -> for .)
+
+
+state 6
+
+    (5) stmt -> if .
+
+    ID              reduce using rule 5 (stmt -> if .)
+    FOR             reduce using rule 5 (stmt -> if .)
+    IF              reduce using rule 5 (stmt -> if .)
+    WHILE           reduce using rule 5 (stmt -> if .)
+    NUMBER          reduce using rule 5 (stmt -> if .)
+    LPAREN          reduce using rule 5 (stmt -> if .)
+    $end            reduce using rule 5 (stmt -> if .)
+    RBRACE          reduce using rule 5 (stmt -> if .)
+
+
+state 7
+
+    (6) stmt -> while .
+
+    ID              reduce using rule 6 (stmt -> while .)
+    FOR             reduce using rule 6 (stmt -> while .)
+    IF              reduce using rule 6 (stmt -> while .)
+    WHILE           reduce using rule 6 (stmt -> while .)
+    NUMBER          reduce using rule 6 (stmt -> while .)
+    LPAREN          reduce using rule 6 (stmt -> while .)
+    $end            reduce using rule 6 (stmt -> while .)
+    RBRACE          reduce using rule 6 (stmt -> while .)
+
+
+state 8
+
+    (7) stmt -> expression .
+    (16) expression -> expression . PLUS term
+    (17) expression -> expression . MINUS term
+    (18) expression -> expression . GE term
+    (19) expression -> expression . EQ term
+    (20) expression -> expression . NE term
+    (21) expression -> expression . LT term
+    (22) expression -> expression . LE term
+    (23) expression -> expression . GT term
+
+    ID              reduce using rule 7 (stmt -> expression .)
+    FOR             reduce using rule 7 (stmt -> expression .)
+    IF              reduce using rule 7 (stmt -> expression .)
+    WHILE           reduce using rule 7 (stmt -> expression .)
+    NUMBER          reduce using rule 7 (stmt -> expression .)
+    LPAREN          reduce using rule 7 (stmt -> expression .)
+    $end            reduce using rule 7 (stmt -> expression .)
+    RBRACE          reduce using rule 7 (stmt -> expression .)
+    PLUS            shift and go to state 17
+    MINUS           shift and go to state 18
+    GE              shift and go to state 19
+    EQ              shift and go to state 20
+    NE              shift and go to state 21
+    LT              shift and go to state 22
+    LE              shift and go to state 23
+    GT              shift and go to state 24
+
+
+state 9
+
+    (15) assignment -> ID . ASSIGN expression
+    (29) factor -> ID .
+
+    ASSIGN          shift and go to state 25
+    TIMES           reduce using rule 29 (factor -> ID .)
+    DIVIDE          reduce using rule 29 (factor -> ID .)
+    PLUS            reduce using rule 29 (factor -> ID .)
+    MINUS           reduce using rule 29 (factor -> ID .)
+    GE              reduce using rule 29 (factor -> ID .)
+    EQ              reduce using rule 29 (factor -> ID .)
+    NE              reduce using rule 29 (factor -> ID .)
+    LT              reduce using rule 29 (factor -> ID .)
+    LE              reduce using rule 29 (factor -> ID .)
+    GT              reduce using rule 29 (factor -> ID .)
+    ID              reduce using rule 29 (factor -> ID .)
+    FOR             reduce using rule 29 (factor -> ID .)
+    IF              reduce using rule 29 (factor -> ID .)
+    WHILE           reduce using rule 29 (factor -> ID .)
+    NUMBER          reduce using rule 29 (factor -> ID .)
+    LPAREN          reduce using rule 29 (factor -> ID .)
+    $end            reduce using rule 29 (factor -> ID .)
+    RBRACE          reduce using rule 29 (factor -> ID .)
+
+
+state 10
+
+    (14) for -> FOR . ID IN RANGE LPAREN NUMBER RPAREN COLON LBRACE stmts RBRACE
+
+    ID              shift and go to state 26
+
+
+state 11
+
+    (30) factor -> LPAREN . expression RPAREN
+    (16) expression -> . expression PLUS term
+    (17) expression -> . expression MINUS term
+    (18) expression -> . expression GE term
+    (19) expression -> . expression EQ term
+    (20) expression -> . expression NE term
+    (21) expression -> . expression LT term
+    (22) expression -> . expression LE term
+    (23) expression -> . expression GT term
+    (24) expression -> . term
+    (25) term -> . term TIMES factor
+    (26) term -> . term DIVIDE factor
+    (27) term -> . factor
+    (28) factor -> . NUMBER
+    (29) factor -> . ID
+    (30) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 12
+    ID              shift and go to state 28
+    LPAREN          shift and go to state 11
+
+    expression                     shift and go to state 27
+    term                           shift and go to state 15
+    factor                         shift and go to state 16
+
+state 12
+
+    (28) factor -> NUMBER .
+
+    TIMES           reduce using rule 28 (factor -> NUMBER .)
+    DIVIDE          reduce using rule 28 (factor -> NUMBER .)
+    PLUS            reduce using rule 28 (factor -> NUMBER .)
+    MINUS           reduce using rule 28 (factor -> NUMBER .)
+    GE              reduce using rule 28 (factor -> NUMBER .)
+    EQ              reduce using rule 28 (factor -> NUMBER .)
+    NE              reduce using rule 28 (factor -> NUMBER .)
+    LT              reduce using rule 28 (factor -> NUMBER .)
+    LE              reduce using rule 28 (factor -> NUMBER .)
+    GT              reduce using rule 28 (factor -> NUMBER .)
+    ID              reduce using rule 28 (factor -> NUMBER .)
+    FOR             reduce using rule 28 (factor -> NUMBER .)
+    IF              reduce using rule 28 (factor -> NUMBER .)
+    WHILE           reduce using rule 28 (factor -> NUMBER .)
+    NUMBER          reduce using rule 28 (factor -> NUMBER .)
+    LPAREN          reduce using rule 28 (factor -> NUMBER .)
+    $end            reduce using rule 28 (factor -> NUMBER .)
+    RPAREN          reduce using rule 28 (factor -> NUMBER .)
+    COLON           reduce using rule 28 (factor -> NUMBER .)
+    RBRACE          reduce using rule 28 (factor -> NUMBER .)
+
+
+state 13
+
+    (8) if -> IF . expression COLON LBRACE stmts RBRACE elif
+    (16) expression -> . expression PLUS term
+    (17) expression -> . expression MINUS term
+    (18) expression -> . expression GE term
+    (19) expression -> . expression EQ term
+    (20) expression -> . expression NE term
+    (21) expression -> . expression LT term
+    (22) expression -> . expression LE term
+    (23) expression -> . expression GT term
+    (24) expression -> . term
+    (25) term -> . term TIMES factor
+    (26) term -> . term DIVIDE factor
+    (27) term -> . factor
+    (28) factor -> . NUMBER
+    (29) factor -> . ID
+    (30) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 12
+    ID              shift and go to state 28
+    LPAREN          shift and go to state 11
+
+    expression                     shift and go to state 29
+    term                           shift and go to state 15
+    factor                         shift and go to state 16
+
+state 14
+
+    (13) while -> WHILE . expression COLON LBRACE stmts RBRACE
+    (16) expression -> . expression PLUS term
+    (17) expression -> . expression MINUS term
+    (18) expression -> . expression GE term
+    (19) expression -> . expression EQ term
+    (20) expression -> . expression NE term
+    (21) expression -> . expression LT term
+    (22) expression -> . expression LE term
+    (23) expression -> . expression GT term
+    (24) expression -> . term
+    (25) term -> . term TIMES factor
+    (26) term -> . term DIVIDE factor
+    (27) term -> . factor
+    (28) factor -> . NUMBER
+    (29) factor -> . ID
+    (30) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 12
+    ID              shift and go to state 28
+    LPAREN          shift and go to state 11
+
+    expression                     shift and go to state 30
+    term                           shift and go to state 15
+    factor                         shift and go to state 16
+
+state 15
+
+    (24) expression -> term .
+    (25) term -> term . TIMES factor
+    (26) term -> term . DIVIDE factor
+
+    PLUS            reduce using rule 24 (expression -> term .)
+    MINUS           reduce using rule 24 (expression -> term .)
+    GE              reduce using rule 24 (expression -> term .)
+    EQ              reduce using rule 24 (expression -> term .)
+    NE              reduce using rule 24 (expression -> term .)
+    LT              reduce using rule 24 (expression -> term .)
+    LE              reduce using rule 24 (expression -> term .)
+    GT              reduce using rule 24 (expression -> term .)
+    ID              reduce using rule 24 (expression -> term .)
+    FOR             reduce using rule 24 (expression -> term .)
+    IF              reduce using rule 24 (expression -> term .)
+    WHILE           reduce using rule 24 (expression -> term .)
+    NUMBER          reduce using rule 24 (expression -> term .)
+    LPAREN          reduce using rule 24 (expression -> term .)
+    $end            reduce using rule 24 (expression -> term .)
+    RPAREN          reduce using rule 24 (expression -> term .)
+    COLON           reduce using rule 24 (expression -> term .)
+    RBRACE          reduce using rule 24 (expression -> term .)
+    TIMES           shift and go to state 31
+    DIVIDE          shift and go to state 32
+
+
+state 16
+
+    (27) term -> factor .
+
+    TIMES           reduce using rule 27 (term -> factor .)
+    DIVIDE          reduce using rule 27 (term -> factor .)
+    PLUS            reduce using rule 27 (term -> factor .)
+    MINUS           reduce using rule 27 (term -> factor .)
+    GE              reduce using rule 27 (term -> factor .)
+    EQ              reduce using rule 27 (term -> factor .)
+    NE              reduce using rule 27 (term -> factor .)
+    LT              reduce using rule 27 (term -> factor .)
+    LE              reduce using rule 27 (term -> factor .)
+    GT              reduce using rule 27 (term -> factor .)
+    ID              reduce using rule 27 (term -> factor .)
+    FOR             reduce using rule 27 (term -> factor .)
+    IF              reduce using rule 27 (term -> factor .)
+    WHILE           reduce using rule 27 (term -> factor .)
+    NUMBER          reduce using rule 27 (term -> factor .)
+    LPAREN          reduce using rule 27 (term -> factor .)
+    $end            reduce using rule 27 (term -> factor .)
+    RPAREN          reduce using rule 27 (term -> factor .)
+    COLON           reduce using rule 27 (term -> factor .)
+    RBRACE          reduce using rule 27 (term -> factor .)
+
+
+state 17
+
+    (16) expression -> expression PLUS . term
+    (25) term -> . term TIMES factor
+    (26) term -> . term DIVIDE factor
+    (27) term -> . factor
+    (28) factor -> . NUMBER
+    (29) factor -> . ID
+    (30) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 12
+    ID              shift and go to state 28
+    LPAREN          shift and go to state 11
+
+    term                           shift and go to state 33
+    factor                         shift and go to state 16
+
+state 18
+
+    (17) expression -> expression MINUS . term
+    (25) term -> . term TIMES factor
+    (26) term -> . term DIVIDE factor
+    (27) term -> . factor
+    (28) factor -> . NUMBER
+    (29) factor -> . ID
+    (30) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 12
+    ID              shift and go to state 28
+    LPAREN          shift and go to state 11
+
+    term                           shift and go to state 34
+    factor                         shift and go to state 16
+
+state 19
+
+    (18) expression -> expression GE . term
+    (25) term -> . term TIMES factor
+    (26) term -> . term DIVIDE factor
+    (27) term -> . factor
+    (28) factor -> . NUMBER
+    (29) factor -> . ID
+    (30) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 12
+    ID              shift and go to state 28
+    LPAREN          shift and go to state 11
+
+    term                           shift and go to state 35
+    factor                         shift and go to state 16
+
+state 20
+
+    (19) expression -> expression EQ . term
+    (25) term -> . term TIMES factor
+    (26) term -> . term DIVIDE factor
+    (27) term -> . factor
+    (28) factor -> . NUMBER
+    (29) factor -> . ID
+    (30) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 12
+    ID              shift and go to state 28
+    LPAREN          shift and go to state 11
+
+    term                           shift and go to state 36
+    factor                         shift and go to state 16
+
+state 21
+
+    (20) expression -> expression NE . term
+    (25) term -> . term TIMES factor
+    (26) term -> . term DIVIDE factor
+    (27) term -> . factor
+    (28) factor -> . NUMBER
+    (29) factor -> . ID
+    (30) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 12
+    ID              shift and go to state 28
+    LPAREN          shift and go to state 11
+
+    term                           shift and go to state 37
+    factor                         shift and go to state 16
+
+state 22
+
+    (21) expression -> expression LT . term
+    (25) term -> . term TIMES factor
+    (26) term -> . term DIVIDE factor
+    (27) term -> . factor
+    (28) factor -> . NUMBER
+    (29) factor -> . ID
+    (30) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 12
+    ID              shift and go to state 28
+    LPAREN          shift and go to state 11
+
+    term                           shift and go to state 38
+    factor                         shift and go to state 16
+
+state 23
+
+    (22) expression -> expression LE . term
+    (25) term -> . term TIMES factor
+    (26) term -> . term DIVIDE factor
+    (27) term -> . factor
+    (28) factor -> . NUMBER
+    (29) factor -> . ID
+    (30) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 12
+    ID              shift and go to state 28
+    LPAREN          shift and go to state 11
+
+    term                           shift and go to state 39
+    factor                         shift and go to state 16
+
+state 24
+
+    (23) expression -> expression GT . term
+    (25) term -> . term TIMES factor
+    (26) term -> . term DIVIDE factor
+    (27) term -> . factor
+    (28) factor -> . NUMBER
+    (29) factor -> . ID
+    (30) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 12
+    ID              shift and go to state 28
+    LPAREN          shift and go to state 11
+
+    term                           shift and go to state 40
+    factor                         shift and go to state 16
+
+state 25
+
+    (15) assignment -> ID ASSIGN . expression
+    (16) expression -> . expression PLUS term
+    (17) expression -> . expression MINUS term
+    (18) expression -> . expression GE term
+    (19) expression -> . expression EQ term
+    (20) expression -> . expression NE term
+    (21) expression -> . expression LT term
+    (22) expression -> . expression LE term
+    (23) expression -> . expression GT term
+    (24) expression -> . term
+    (25) term -> . term TIMES factor
+    (26) term -> . term DIVIDE factor
+    (27) term -> . factor
+    (28) factor -> . NUMBER
+    (29) factor -> . ID
+    (30) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 12
+    ID              shift and go to state 28
+    LPAREN          shift and go to state 11
+
+    expression                     shift and go to state 41
+    term                           shift and go to state 15
+    factor                         shift and go to state 16
+
+state 26
+
+    (14) for -> FOR ID . IN RANGE LPAREN NUMBER RPAREN COLON LBRACE stmts RBRACE
+
+    IN              shift and go to state 42
+
+
+state 27
+
+    (30) factor -> LPAREN expression . RPAREN
+    (16) expression -> expression . PLUS term
+    (17) expression -> expression . MINUS term
+    (18) expression -> expression . GE term
+    (19) expression -> expression . EQ term
+    (20) expression -> expression . NE term
+    (21) expression -> expression . LT term
+    (22) expression -> expression . LE term
+    (23) expression -> expression . GT term
+
+    RPAREN          shift and go to state 43
+    PLUS            shift and go to state 17
+    MINUS           shift and go to state 18
+    GE              shift and go to state 19
+    EQ              shift and go to state 20
+    NE              shift and go to state 21
+    LT              shift and go to state 22
+    LE              shift and go to state 23
+    GT              shift and go to state 24
+
+
+state 28
+
+    (29) factor -> ID .
+
+    TIMES           reduce using rule 29 (factor -> ID .)
+    DIVIDE          reduce using rule 29 (factor -> ID .)
+    RPAREN          reduce using rule 29 (factor -> ID .)
+    PLUS            reduce using rule 29 (factor -> ID .)
+    MINUS           reduce using rule 29 (factor -> ID .)
+    GE              reduce using rule 29 (factor -> ID .)
+    EQ              reduce using rule 29 (factor -> ID .)
+    NE              reduce using rule 29 (factor -> ID .)
+    LT              reduce using rule 29 (factor -> ID .)
+    LE              reduce using rule 29 (factor -> ID .)
+    GT              reduce using rule 29 (factor -> ID .)
+    COLON           reduce using rule 29 (factor -> ID .)
+    ID              reduce using rule 29 (factor -> ID .)
+    FOR             reduce using rule 29 (factor -> ID .)
+    IF              reduce using rule 29 (factor -> ID .)
+    WHILE           reduce using rule 29 (factor -> ID .)
+    NUMBER          reduce using rule 29 (factor -> ID .)
+    LPAREN          reduce using rule 29 (factor -> ID .)
+    $end            reduce using rule 29 (factor -> ID .)
+    RBRACE          reduce using rule 29 (factor -> ID .)
+
+
+state 29
+
+    (8) if -> IF expression . COLON LBRACE stmts RBRACE elif
+    (16) expression -> expression . PLUS term
+    (17) expression -> expression . MINUS term
+    (18) expression -> expression . GE term
+    (19) expression -> expression . EQ term
+    (20) expression -> expression . NE term
+    (21) expression -> expression . LT term
+    (22) expression -> expression . LE term
+    (23) expression -> expression . GT term
+
+    COLON           shift and go to state 44
+    PLUS            shift and go to state 17
+    MINUS           shift and go to state 18
+    GE              shift and go to state 19
+    EQ              shift and go to state 20
+    NE              shift and go to state 21
+    LT              shift and go to state 22
+    LE              shift and go to state 23
+    GT              shift and go to state 24
+
+
+state 30
+
+    (13) while -> WHILE expression . COLON LBRACE stmts RBRACE
+    (16) expression -> expression . PLUS term
+    (17) expression -> expression . MINUS term
+    (18) expression -> expression . GE term
+    (19) expression -> expression . EQ term
+    (20) expression -> expression . NE term
+    (21) expression -> expression . LT term
+    (22) expression -> expression . LE term
+    (23) expression -> expression . GT term
+
+    COLON           shift and go to state 45
+    PLUS            shift and go to state 17
+    MINUS           shift and go to state 18
+    GE              shift and go to state 19
+    EQ              shift and go to state 20
+    NE              shift and go to state 21
+    LT              shift and go to state 22
+    LE              shift and go to state 23
+    GT              shift and go to state 24
+
+
+state 31
+
+    (25) term -> term TIMES . factor
+    (28) factor -> . NUMBER
+    (29) factor -> . ID
+    (30) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 12
+    ID              shift and go to state 28
+    LPAREN          shift and go to state 11
+
+    factor                         shift and go to state 46
+
+state 32
+
+    (26) term -> term DIVIDE . factor
+    (28) factor -> . NUMBER
+    (29) factor -> . ID
+    (30) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 12
+    ID              shift and go to state 28
+    LPAREN          shift and go to state 11
+
+    factor                         shift and go to state 47
+
+state 33
+
+    (16) expression -> expression PLUS term .
+    (25) term -> term . TIMES factor
+    (26) term -> term . DIVIDE factor
+
+    PLUS            reduce using rule 16 (expression -> expression PLUS term .)
+    MINUS           reduce using rule 16 (expression -> expression PLUS term .)
+    GE              reduce using rule 16 (expression -> expression PLUS term .)
+    EQ              reduce using rule 16 (expression -> expression PLUS term .)
+    NE              reduce using rule 16 (expression -> expression PLUS term .)
+    LT              reduce using rule 16 (expression -> expression PLUS term .)
+    LE              reduce using rule 16 (expression -> expression PLUS term .)
+    GT              reduce using rule 16 (expression -> expression PLUS term .)
+    ID              reduce using rule 16 (expression -> expression PLUS term .)
+    FOR             reduce using rule 16 (expression -> expression PLUS term .)
+    IF              reduce using rule 16 (expression -> expression PLUS term .)
+    WHILE           reduce using rule 16 (expression -> expression PLUS term .)
+    NUMBER          reduce using rule 16 (expression -> expression PLUS term .)
+    LPAREN          reduce using rule 16 (expression -> expression PLUS term .)
+    $end            reduce using rule 16 (expression -> expression PLUS term .)
+    RPAREN          reduce using rule 16 (expression -> expression PLUS term .)
+    COLON           reduce using rule 16 (expression -> expression PLUS term .)
+    RBRACE          reduce using rule 16 (expression -> expression PLUS term .)
+    TIMES           shift and go to state 31
+    DIVIDE          shift and go to state 32
+
+
+state 34
+
+    (17) expression -> expression MINUS term .
+    (25) term -> term . TIMES factor
+    (26) term -> term . DIVIDE factor
+
+    PLUS            reduce using rule 17 (expression -> expression MINUS term .)
+    MINUS           reduce using rule 17 (expression -> expression MINUS term .)
+    GE              reduce using rule 17 (expression -> expression MINUS term .)
+    EQ              reduce using rule 17 (expression -> expression MINUS term .)
+    NE              reduce using rule 17 (expression -> expression MINUS term .)
+    LT              reduce using rule 17 (expression -> expression MINUS term .)
+    LE              reduce using rule 17 (expression -> expression MINUS term .)
+    GT              reduce using rule 17 (expression -> expression MINUS term .)
+    ID              reduce using rule 17 (expression -> expression MINUS term .)
+    FOR             reduce using rule 17 (expression -> expression MINUS term .)
+    IF              reduce using rule 17 (expression -> expression MINUS term .)
+    WHILE           reduce using rule 17 (expression -> expression MINUS term .)
+    NUMBER          reduce using rule 17 (expression -> expression MINUS term .)
+    LPAREN          reduce using rule 17 (expression -> expression MINUS term .)
+    $end            reduce using rule 17 (expression -> expression MINUS term .)
+    RPAREN          reduce using rule 17 (expression -> expression MINUS term .)
+    COLON           reduce using rule 17 (expression -> expression MINUS term .)
+    RBRACE          reduce using rule 17 (expression -> expression MINUS term .)
+    TIMES           shift and go to state 31
+    DIVIDE          shift and go to state 32
+
+
+state 35
+
+    (18) expression -> expression GE term .
+    (25) term -> term . TIMES factor
+    (26) term -> term . DIVIDE factor
+
+    PLUS            reduce using rule 18 (expression -> expression GE term .)
+    MINUS           reduce using rule 18 (expression -> expression GE term .)
+    GE              reduce using rule 18 (expression -> expression GE term .)
+    EQ              reduce using rule 18 (expression -> expression GE term .)
+    NE              reduce using rule 18 (expression -> expression GE term .)
+    LT              reduce using rule 18 (expression -> expression GE term .)
+    LE              reduce using rule 18 (expression -> expression GE term .)
+    GT              reduce using rule 18 (expression -> expression GE term .)
+    ID              reduce using rule 18 (expression -> expression GE term .)
+    FOR             reduce using rule 18 (expression -> expression GE term .)
+    IF              reduce using rule 18 (expression -> expression GE term .)
+    WHILE           reduce using rule 18 (expression -> expression GE term .)
+    NUMBER          reduce using rule 18 (expression -> expression GE term .)
+    LPAREN          reduce using rule 18 (expression -> expression GE term .)
+    $end            reduce using rule 18 (expression -> expression GE term .)
+    RPAREN          reduce using rule 18 (expression -> expression GE term .)
+    COLON           reduce using rule 18 (expression -> expression GE term .)
+    RBRACE          reduce using rule 18 (expression -> expression GE term .)
+    TIMES           shift and go to state 31
+    DIVIDE          shift and go to state 32
+
+
+state 36
+
+    (19) expression -> expression EQ term .
+    (25) term -> term . TIMES factor
+    (26) term -> term . DIVIDE factor
+
+    PLUS            reduce using rule 19 (expression -> expression EQ term .)
+    MINUS           reduce using rule 19 (expression -> expression EQ term .)
+    GE              reduce using rule 19 (expression -> expression EQ term .)
+    EQ              reduce using rule 19 (expression -> expression EQ term .)
+    NE              reduce using rule 19 (expression -> expression EQ term .)
+    LT              reduce using rule 19 (expression -> expression EQ term .)
+    LE              reduce using rule 19 (expression -> expression EQ term .)
+    GT              reduce using rule 19 (expression -> expression EQ term .)
+    ID              reduce using rule 19 (expression -> expression EQ term .)
+    FOR             reduce using rule 19 (expression -> expression EQ term .)
+    IF              reduce using rule 19 (expression -> expression EQ term .)
+    WHILE           reduce using rule 19 (expression -> expression EQ term .)
+    NUMBER          reduce using rule 19 (expression -> expression EQ term .)
+    LPAREN          reduce using rule 19 (expression -> expression EQ term .)
+    $end            reduce using rule 19 (expression -> expression EQ term .)
+    RPAREN          reduce using rule 19 (expression -> expression EQ term .)
+    COLON           reduce using rule 19 (expression -> expression EQ term .)
+    RBRACE          reduce using rule 19 (expression -> expression EQ term .)
+    TIMES           shift and go to state 31
+    DIVIDE          shift and go to state 32
+
+
+state 37
+
+    (20) expression -> expression NE term .
+    (25) term -> term . TIMES factor
+    (26) term -> term . DIVIDE factor
+
+    PLUS            reduce using rule 20 (expression -> expression NE term .)
+    MINUS           reduce using rule 20 (expression -> expression NE term .)
+    GE              reduce using rule 20 (expression -> expression NE term .)
+    EQ              reduce using rule 20 (expression -> expression NE term .)
+    NE              reduce using rule 20 (expression -> expression NE term .)
+    LT              reduce using rule 20 (expression -> expression NE term .)
+    LE              reduce using rule 20 (expression -> expression NE term .)
+    GT              reduce using rule 20 (expression -> expression NE term .)
+    ID              reduce using rule 20 (expression -> expression NE term .)
+    FOR             reduce using rule 20 (expression -> expression NE term .)
+    IF              reduce using rule 20 (expression -> expression NE term .)
+    WHILE           reduce using rule 20 (expression -> expression NE term .)
+    NUMBER          reduce using rule 20 (expression -> expression NE term .)
+    LPAREN          reduce using rule 20 (expression -> expression NE term .)
+    $end            reduce using rule 20 (expression -> expression NE term .)
+    RPAREN          reduce using rule 20 (expression -> expression NE term .)
+    COLON           reduce using rule 20 (expression -> expression NE term .)
+    RBRACE          reduce using rule 20 (expression -> expression NE term .)
+    TIMES           shift and go to state 31
+    DIVIDE          shift and go to state 32
+
+
+state 38
+
+    (21) expression -> expression LT term .
+    (25) term -> term . TIMES factor
+    (26) term -> term . DIVIDE factor
+
+    PLUS            reduce using rule 21 (expression -> expression LT term .)
+    MINUS           reduce using rule 21 (expression -> expression LT term .)
+    GE              reduce using rule 21 (expression -> expression LT term .)
+    EQ              reduce using rule 21 (expression -> expression LT term .)
+    NE              reduce using rule 21 (expression -> expression LT term .)
+    LT              reduce using rule 21 (expression -> expression LT term .)
+    LE              reduce using rule 21 (expression -> expression LT term .)
+    GT              reduce using rule 21 (expression -> expression LT term .)
+    ID              reduce using rule 21 (expression -> expression LT term .)
+    FOR             reduce using rule 21 (expression -> expression LT term .)
+    IF              reduce using rule 21 (expression -> expression LT term .)
+    WHILE           reduce using rule 21 (expression -> expression LT term .)
+    NUMBER          reduce using rule 21 (expression -> expression LT term .)
+    LPAREN          reduce using rule 21 (expression -> expression LT term .)
+    $end            reduce using rule 21 (expression -> expression LT term .)
+    RPAREN          reduce using rule 21 (expression -> expression LT term .)
+    COLON           reduce using rule 21 (expression -> expression LT term .)
+    RBRACE          reduce using rule 21 (expression -> expression LT term .)
+    TIMES           shift and go to state 31
+    DIVIDE          shift and go to state 32
+
+
+state 39
+
+    (22) expression -> expression LE term .
+    (25) term -> term . TIMES factor
+    (26) term -> term . DIVIDE factor
+
+    PLUS            reduce using rule 22 (expression -> expression LE term .)
+    MINUS           reduce using rule 22 (expression -> expression LE term .)
+    GE              reduce using rule 22 (expression -> expression LE term .)
+    EQ              reduce using rule 22 (expression -> expression LE term .)
+    NE              reduce using rule 22 (expression -> expression LE term .)
+    LT              reduce using rule 22 (expression -> expression LE term .)
+    LE              reduce using rule 22 (expression -> expression LE term .)
+    GT              reduce using rule 22 (expression -> expression LE term .)
+    ID              reduce using rule 22 (expression -> expression LE term .)
+    FOR             reduce using rule 22 (expression -> expression LE term .)
+    IF              reduce using rule 22 (expression -> expression LE term .)
+    WHILE           reduce using rule 22 (expression -> expression LE term .)
+    NUMBER          reduce using rule 22 (expression -> expression LE term .)
+    LPAREN          reduce using rule 22 (expression -> expression LE term .)
+    $end            reduce using rule 22 (expression -> expression LE term .)
+    RPAREN          reduce using rule 22 (expression -> expression LE term .)
+    COLON           reduce using rule 22 (expression -> expression LE term .)
+    RBRACE          reduce using rule 22 (expression -> expression LE term .)
+    TIMES           shift and go to state 31
+    DIVIDE          shift and go to state 32
+
+
+state 40
+
+    (23) expression -> expression GT term .
+    (25) term -> term . TIMES factor
+    (26) term -> term . DIVIDE factor
+
+    PLUS            reduce using rule 23 (expression -> expression GT term .)
+    MINUS           reduce using rule 23 (expression -> expression GT term .)
+    GE              reduce using rule 23 (expression -> expression GT term .)
+    EQ              reduce using rule 23 (expression -> expression GT term .)
+    NE              reduce using rule 23 (expression -> expression GT term .)
+    LT              reduce using rule 23 (expression -> expression GT term .)
+    LE              reduce using rule 23 (expression -> expression GT term .)
+    GT              reduce using rule 23 (expression -> expression GT term .)
+    ID              reduce using rule 23 (expression -> expression GT term .)
+    FOR             reduce using rule 23 (expression -> expression GT term .)
+    IF              reduce using rule 23 (expression -> expression GT term .)
+    WHILE           reduce using rule 23 (expression -> expression GT term .)
+    NUMBER          reduce using rule 23 (expression -> expression GT term .)
+    LPAREN          reduce using rule 23 (expression -> expression GT term .)
+    $end            reduce using rule 23 (expression -> expression GT term .)
+    RPAREN          reduce using rule 23 (expression -> expression GT term .)
+    COLON           reduce using rule 23 (expression -> expression GT term .)
+    RBRACE          reduce using rule 23 (expression -> expression GT term .)
+    TIMES           shift and go to state 31
+    DIVIDE          shift and go to state 32
+
+
+state 41
+
+    (15) assignment -> ID ASSIGN expression .
+    (16) expression -> expression . PLUS term
+    (17) expression -> expression . MINUS term
+    (18) expression -> expression . GE term
+    (19) expression -> expression . EQ term
+    (20) expression -> expression . NE term
+    (21) expression -> expression . LT term
+    (22) expression -> expression . LE term
+    (23) expression -> expression . GT term
+
+    ID              reduce using rule 15 (assignment -> ID ASSIGN expression .)
+    FOR             reduce using rule 15 (assignment -> ID ASSIGN expression .)
+    IF              reduce using rule 15 (assignment -> ID ASSIGN expression .)
+    WHILE           reduce using rule 15 (assignment -> ID ASSIGN expression .)
+    NUMBER          reduce using rule 15 (assignment -> ID ASSIGN expression .)
+    LPAREN          reduce using rule 15 (assignment -> ID ASSIGN expression .)
+    $end            reduce using rule 15 (assignment -> ID ASSIGN expression .)
+    RBRACE          reduce using rule 15 (assignment -> ID ASSIGN expression .)
+    PLUS            shift and go to state 17
+    MINUS           shift and go to state 18
+    GE              shift and go to state 19
+    EQ              shift and go to state 20
+    NE              shift and go to state 21
+    LT              shift and go to state 22
+    LE              shift and go to state 23
+    GT              shift and go to state 24
+
+
+state 42
+
+    (14) for -> FOR ID IN . RANGE LPAREN NUMBER RPAREN COLON LBRACE stmts RBRACE
+
+    RANGE           shift and go to state 48
+
+
+state 43
+
+    (30) factor -> LPAREN expression RPAREN .
+
+    TIMES           reduce using rule 30 (factor -> LPAREN expression RPAREN .)
+    DIVIDE          reduce using rule 30 (factor -> LPAREN expression RPAREN .)
+    PLUS            reduce using rule 30 (factor -> LPAREN expression RPAREN .)
+    MINUS           reduce using rule 30 (factor -> LPAREN expression RPAREN .)
+    GE              reduce using rule 30 (factor -> LPAREN expression RPAREN .)
+    EQ              reduce using rule 30 (factor -> LPAREN expression RPAREN .)
+    NE              reduce using rule 30 (factor -> LPAREN expression RPAREN .)
+    LT              reduce using rule 30 (factor -> LPAREN expression RPAREN .)
+    LE              reduce using rule 30 (factor -> LPAREN expression RPAREN .)
+    GT              reduce using rule 30 (factor -> LPAREN expression RPAREN .)
+    ID              reduce using rule 30 (factor -> LPAREN expression RPAREN .)
+    FOR             reduce using rule 30 (factor -> LPAREN expression RPAREN .)
+    IF              reduce using rule 30 (factor -> LPAREN expression RPAREN .)
+    WHILE           reduce using rule 30 (factor -> LPAREN expression RPAREN .)
+    NUMBER          reduce using rule 30 (factor -> LPAREN expression RPAREN .)
+    LPAREN          reduce using rule 30 (factor -> LPAREN expression RPAREN .)
+    $end            reduce using rule 30 (factor -> LPAREN expression RPAREN .)
+    RPAREN          reduce using rule 30 (factor -> LPAREN expression RPAREN .)
+    COLON           reduce using rule 30 (factor -> LPAREN expression RPAREN .)
+    RBRACE          reduce using rule 30 (factor -> LPAREN expression RPAREN .)
+
+
+state 44
+
+    (8) if -> IF expression COLON . LBRACE stmts RBRACE elif
+
+    LBRACE          shift and go to state 49
+
+
+state 45
+
+    (13) while -> WHILE expression COLON . LBRACE stmts RBRACE
+
+    LBRACE          shift and go to state 50
+
+
+state 46
+
+    (25) term -> term TIMES factor .
+
+    TIMES           reduce using rule 25 (term -> term TIMES factor .)
+    DIVIDE          reduce using rule 25 (term -> term TIMES factor .)
+    PLUS            reduce using rule 25 (term -> term TIMES factor .)
+    MINUS           reduce using rule 25 (term -> term TIMES factor .)
+    GE              reduce using rule 25 (term -> term TIMES factor .)
+    EQ              reduce using rule 25 (term -> term TIMES factor .)
+    NE              reduce using rule 25 (term -> term TIMES factor .)
+    LT              reduce using rule 25 (term -> term TIMES factor .)
+    LE              reduce using rule 25 (term -> term TIMES factor .)
+    GT              reduce using rule 25 (term -> term TIMES factor .)
+    ID              reduce using rule 25 (term -> term TIMES factor .)
+    FOR             reduce using rule 25 (term -> term TIMES factor .)
+    IF              reduce using rule 25 (term -> term TIMES factor .)
+    WHILE           reduce using rule 25 (term -> term TIMES factor .)
+    NUMBER          reduce using rule 25 (term -> term TIMES factor .)
+    LPAREN          reduce using rule 25 (term -> term TIMES factor .)
+    $end            reduce using rule 25 (term -> term TIMES factor .)
+    RPAREN          reduce using rule 25 (term -> term TIMES factor .)
+    COLON           reduce using rule 25 (term -> term TIMES factor .)
+    RBRACE          reduce using rule 25 (term -> term TIMES factor .)
+
+
+state 47
+
+    (26) term -> term DIVIDE factor .
+
+    TIMES           reduce using rule 26 (term -> term DIVIDE factor .)
+    DIVIDE          reduce using rule 26 (term -> term DIVIDE factor .)
+    PLUS            reduce using rule 26 (term -> term DIVIDE factor .)
+    MINUS           reduce using rule 26 (term -> term DIVIDE factor .)
+    GE              reduce using rule 26 (term -> term DIVIDE factor .)
+    EQ              reduce using rule 26 (term -> term DIVIDE factor .)
+    NE              reduce using rule 26 (term -> term DIVIDE factor .)
+    LT              reduce using rule 26 (term -> term DIVIDE factor .)
+    LE              reduce using rule 26 (term -> term DIVIDE factor .)
+    GT              reduce using rule 26 (term -> term DIVIDE factor .)
+    ID              reduce using rule 26 (term -> term DIVIDE factor .)
+    FOR             reduce using rule 26 (term -> term DIVIDE factor .)
+    IF              reduce using rule 26 (term -> term DIVIDE factor .)
+    WHILE           reduce using rule 26 (term -> term DIVIDE factor .)
+    NUMBER          reduce using rule 26 (term -> term DIVIDE factor .)
+    LPAREN          reduce using rule 26 (term -> term DIVIDE factor .)
+    $end            reduce using rule 26 (term -> term DIVIDE factor .)
+    RPAREN          reduce using rule 26 (term -> term DIVIDE factor .)
+    COLON           reduce using rule 26 (term -> term DIVIDE factor .)
+    RBRACE          reduce using rule 26 (term -> term DIVIDE factor .)
+
+
+state 48
+
+    (14) for -> FOR ID IN RANGE . LPAREN NUMBER RPAREN COLON LBRACE stmts RBRACE
+
+    LPAREN          shift and go to state 51
+
+
+state 49
+
+    (8) if -> IF expression COLON LBRACE . stmts RBRACE elif
+    (1) stmts -> . stmts stmt
+    (2) stmts -> . empty
+    (31) empty -> .
+
+    RBRACE          reduce using rule 31 (empty -> .)
+    ID              reduce using rule 31 (empty -> .)
+    FOR             reduce using rule 31 (empty -> .)
+    IF              reduce using rule 31 (empty -> .)
+    WHILE           reduce using rule 31 (empty -> .)
+    NUMBER          reduce using rule 31 (empty -> .)
+    LPAREN          reduce using rule 31 (empty -> .)
+
+    stmts                          shift and go to state 52
+    empty                          shift and go to state 2
+
+state 50
+
+    (13) while -> WHILE expression COLON LBRACE . stmts RBRACE
+    (1) stmts -> . stmts stmt
+    (2) stmts -> . empty
+    (31) empty -> .
+
+    RBRACE          reduce using rule 31 (empty -> .)
+    ID              reduce using rule 31 (empty -> .)
+    FOR             reduce using rule 31 (empty -> .)
+    IF              reduce using rule 31 (empty -> .)
+    WHILE           reduce using rule 31 (empty -> .)
+    NUMBER          reduce using rule 31 (empty -> .)
+    LPAREN          reduce using rule 31 (empty -> .)
+
+    stmts                          shift and go to state 53
+    empty                          shift and go to state 2
+
+state 51
+
+    (14) for -> FOR ID IN RANGE LPAREN . NUMBER RPAREN COLON LBRACE stmts RBRACE
+
+    NUMBER          shift and go to state 54
+
+
+state 52
+
+    (8) if -> IF expression COLON LBRACE stmts . RBRACE elif
+    (1) stmts -> stmts . stmt
+    (3) stmt -> . assignment
+    (4) stmt -> . for
+    (5) stmt -> . if
+    (6) stmt -> . while
+    (7) stmt -> . expression
+    (15) assignment -> . ID ASSIGN expression
+    (14) for -> . FOR ID IN RANGE LPAREN NUMBER RPAREN COLON LBRACE stmts RBRACE
+    (8) if -> . IF expression COLON LBRACE stmts RBRACE elif
+    (13) while -> . WHILE expression COLON LBRACE stmts RBRACE
+    (16) expression -> . expression PLUS term
+    (17) expression -> . expression MINUS term
+    (18) expression -> . expression GE term
+    (19) expression -> . expression EQ term
+    (20) expression -> . expression NE term
+    (21) expression -> . expression LT term
+    (22) expression -> . expression LE term
+    (23) expression -> . expression GT term
+    (24) expression -> . term
+    (25) term -> . term TIMES factor
+    (26) term -> . term DIVIDE factor
+    (27) term -> . factor
+    (28) factor -> . NUMBER
+    (29) factor -> . ID
+    (30) factor -> . LPAREN expression RPAREN
+
+    RBRACE          shift and go to state 55
+    ID              shift and go to state 9
+    FOR             shift and go to state 10
+    IF              shift and go to state 13
+    WHILE           shift and go to state 14
+    NUMBER          shift and go to state 12
+    LPAREN          shift and go to state 11
+
+    expression                     shift and go to state 8
+    stmt                           shift and go to state 3
+    assignment                     shift and go to state 4
+    for                            shift and go to state 5
+    if                             shift and go to state 6
+    while                          shift and go to state 7
+    term                           shift and go to state 15
+    factor                         shift and go to state 16
+
+state 53
+
+    (13) while -> WHILE expression COLON LBRACE stmts . RBRACE
+    (1) stmts -> stmts . stmt
+    (3) stmt -> . assignment
+    (4) stmt -> . for
+    (5) stmt -> . if
+    (6) stmt -> . while
+    (7) stmt -> . expression
+    (15) assignment -> . ID ASSIGN expression
+    (14) for -> . FOR ID IN RANGE LPAREN NUMBER RPAREN COLON LBRACE stmts RBRACE
+    (8) if -> . IF expression COLON LBRACE stmts RBRACE elif
+    (13) while -> . WHILE expression COLON LBRACE stmts RBRACE
+    (16) expression -> . expression PLUS term
+    (17) expression -> . expression MINUS term
+    (18) expression -> . expression GE term
+    (19) expression -> . expression EQ term
+    (20) expression -> . expression NE term
+    (21) expression -> . expression LT term
+    (22) expression -> . expression LE term
+    (23) expression -> . expression GT term
+    (24) expression -> . term
+    (25) term -> . term TIMES factor
+    (26) term -> . term DIVIDE factor
+    (27) term -> . factor
+    (28) factor -> . NUMBER
+    (29) factor -> . ID
+    (30) factor -> . LPAREN expression RPAREN
+
+    RBRACE          shift and go to state 56
+    ID              shift and go to state 9
+    FOR             shift and go to state 10
+    IF              shift and go to state 13
+    WHILE           shift and go to state 14
+    NUMBER          shift and go to state 12
+    LPAREN          shift and go to state 11
+
+    expression                     shift and go to state 8
+    stmt                           shift and go to state 3
+    assignment                     shift and go to state 4
+    for                            shift and go to state 5
+    if                             shift and go to state 6
+    while                          shift and go to state 7
+    term                           shift and go to state 15
+    factor                         shift and go to state 16
+
+state 54
+
+    (14) for -> FOR ID IN RANGE LPAREN NUMBER . RPAREN COLON LBRACE stmts RBRACE
+
+    RPAREN          shift and go to state 57
+
+
+state 55
+
+    (8) if -> IF expression COLON LBRACE stmts RBRACE . elif
+    (9) elif -> . ELIF expression COLON LBRACE stmts RBRACE elif
+    (10) elif -> . else
+    (11) else -> . ELSE COLON LBRACE stmts RBRACE
+    (12) else -> . empty
+    (31) empty -> .
+
+    ELIF            shift and go to state 59
+    ELSE            shift and go to state 61
+    ID              reduce using rule 31 (empty -> .)
+    FOR             reduce using rule 31 (empty -> .)
+    IF              reduce using rule 31 (empty -> .)
+    WHILE           reduce using rule 31 (empty -> .)
+    NUMBER          reduce using rule 31 (empty -> .)
+    LPAREN          reduce using rule 31 (empty -> .)
+    $end            reduce using rule 31 (empty -> .)
+    RBRACE          reduce using rule 31 (empty -> .)
+
+    elif                           shift and go to state 58
+    else                           shift and go to state 60
+    empty                          shift and go to state 62
+
+state 56
+
+    (13) while -> WHILE expression COLON LBRACE stmts RBRACE .
+
+    ID              reduce using rule 13 (while -> WHILE expression COLON LBRACE stmts RBRACE .)
+    FOR             reduce using rule 13 (while -> WHILE expression COLON LBRACE stmts RBRACE .)
+    IF              reduce using rule 13 (while -> WHILE expression COLON LBRACE stmts RBRACE .)
+    WHILE           reduce using rule 13 (while -> WHILE expression COLON LBRACE stmts RBRACE .)
+    NUMBER          reduce using rule 13 (while -> WHILE expression COLON LBRACE stmts RBRACE .)
+    LPAREN          reduce using rule 13 (while -> WHILE expression COLON LBRACE stmts RBRACE .)
+    $end            reduce using rule 13 (while -> WHILE expression COLON LBRACE stmts RBRACE .)
+    RBRACE          reduce using rule 13 (while -> WHILE expression COLON LBRACE stmts RBRACE .)
+
+
+state 57
+
+    (14) for -> FOR ID IN RANGE LPAREN NUMBER RPAREN . COLON LBRACE stmts RBRACE
+
+    COLON           shift and go to state 63
+
+
+state 58
+
+    (8) if -> IF expression COLON LBRACE stmts RBRACE elif .
+
+    ID              reduce using rule 8 (if -> IF expression COLON LBRACE stmts RBRACE elif .)
+    FOR             reduce using rule 8 (if -> IF expression COLON LBRACE stmts RBRACE elif .)
+    IF              reduce using rule 8 (if -> IF expression COLON LBRACE stmts RBRACE elif .)
+    WHILE           reduce using rule 8 (if -> IF expression COLON LBRACE stmts RBRACE elif .)
+    NUMBER          reduce using rule 8 (if -> IF expression COLON LBRACE stmts RBRACE elif .)
+    LPAREN          reduce using rule 8 (if -> IF expression COLON LBRACE stmts RBRACE elif .)
+    $end            reduce using rule 8 (if -> IF expression COLON LBRACE stmts RBRACE elif .)
+    RBRACE          reduce using rule 8 (if -> IF expression COLON LBRACE stmts RBRACE elif .)
+
+
+state 59
+
+    (9) elif -> ELIF . expression COLON LBRACE stmts RBRACE elif
+    (16) expression -> . expression PLUS term
+    (17) expression -> . expression MINUS term
+    (18) expression -> . expression GE term
+    (19) expression -> . expression EQ term
+    (20) expression -> . expression NE term
+    (21) expression -> . expression LT term
+    (22) expression -> . expression LE term
+    (23) expression -> . expression GT term
+    (24) expression -> . term
+    (25) term -> . term TIMES factor
+    (26) term -> . term DIVIDE factor
+    (27) term -> . factor
+    (28) factor -> . NUMBER
+    (29) factor -> . ID
+    (30) factor -> . LPAREN expression RPAREN
+
+    NUMBER          shift and go to state 12
+    ID              shift and go to state 28
+    LPAREN          shift and go to state 11
+
+    expression                     shift and go to state 64
+    term                           shift and go to state 15
+    factor                         shift and go to state 16
+
+state 60
+
+    (10) elif -> else .
+
+    ID              reduce using rule 10 (elif -> else .)
+    FOR             reduce using rule 10 (elif -> else .)
+    IF              reduce using rule 10 (elif -> else .)
+    WHILE           reduce using rule 10 (elif -> else .)
+    NUMBER          reduce using rule 10 (elif -> else .)
+    LPAREN          reduce using rule 10 (elif -> else .)
+    $end            reduce using rule 10 (elif -> else .)
+    RBRACE          reduce using rule 10 (elif -> else .)
+
+
+state 61
+
+    (11) else -> ELSE . COLON LBRACE stmts RBRACE
+
+    COLON           shift and go to state 65
+
+
+state 62
+
+    (12) else -> empty .
+
+    ID              reduce using rule 12 (else -> empty .)
+    FOR             reduce using rule 12 (else -> empty .)
+    IF              reduce using rule 12 (else -> empty .)
+    WHILE           reduce using rule 12 (else -> empty .)
+    NUMBER          reduce using rule 12 (else -> empty .)
+    LPAREN          reduce using rule 12 (else -> empty .)
+    $end            reduce using rule 12 (else -> empty .)
+    RBRACE          reduce using rule 12 (else -> empty .)
+
+
+state 63
+
+    (14) for -> FOR ID IN RANGE LPAREN NUMBER RPAREN COLON . LBRACE stmts RBRACE
+
+    LBRACE          shift and go to state 66
+
+
+state 64
+
+    (9) elif -> ELIF expression . COLON LBRACE stmts RBRACE elif
+    (16) expression -> expression . PLUS term
+    (17) expression -> expression . MINUS term
+    (18) expression -> expression . GE term
+    (19) expression -> expression . EQ term
+    (20) expression -> expression . NE term
+    (21) expression -> expression . LT term
+    (22) expression -> expression . LE term
+    (23) expression -> expression . GT term
+
+    COLON           shift and go to state 67
+    PLUS            shift and go to state 17
+    MINUS           shift and go to state 18
+    GE              shift and go to state 19
+    EQ              shift and go to state 20
+    NE              shift and go to state 21
+    LT              shift and go to state 22
+    LE              shift and go to state 23
+    GT              shift and go to state 24
+
+
+state 65
+
+    (11) else -> ELSE COLON . LBRACE stmts RBRACE
+
+    LBRACE          shift and go to state 68
+
+
+state 66
+
+    (14) for -> FOR ID IN RANGE LPAREN NUMBER RPAREN COLON LBRACE . stmts RBRACE
+    (1) stmts -> . stmts stmt
+    (2) stmts -> . empty
+    (31) empty -> .
+
+    RBRACE          reduce using rule 31 (empty -> .)
+    ID              reduce using rule 31 (empty -> .)
+    FOR             reduce using rule 31 (empty -> .)
+    IF              reduce using rule 31 (empty -> .)
+    WHILE           reduce using rule 31 (empty -> .)
+    NUMBER          reduce using rule 31 (empty -> .)
+    LPAREN          reduce using rule 31 (empty -> .)
+
+    stmts                          shift and go to state 69
+    empty                          shift and go to state 2
+
+state 67
+
+    (9) elif -> ELIF expression COLON . LBRACE stmts RBRACE elif
+
+    LBRACE          shift and go to state 70
+
+
+state 68
+
+    (11) else -> ELSE COLON LBRACE . stmts RBRACE
+    (1) stmts -> . stmts stmt
+    (2) stmts -> . empty
+    (31) empty -> .
+
+    RBRACE          reduce using rule 31 (empty -> .)
+    ID              reduce using rule 31 (empty -> .)
+    FOR             reduce using rule 31 (empty -> .)
+    IF              reduce using rule 31 (empty -> .)
+    WHILE           reduce using rule 31 (empty -> .)
+    NUMBER          reduce using rule 31 (empty -> .)
+    LPAREN          reduce using rule 31 (empty -> .)
+
+    stmts                          shift and go to state 71
+    empty                          shift and go to state 2
+
+state 69
+
+    (14) for -> FOR ID IN RANGE LPAREN NUMBER RPAREN COLON LBRACE stmts . RBRACE
+    (1) stmts -> stmts . stmt
+    (3) stmt -> . assignment
+    (4) stmt -> . for
+    (5) stmt -> . if
+    (6) stmt -> . while
+    (7) stmt -> . expression
+    (15) assignment -> . ID ASSIGN expression
+    (14) for -> . FOR ID IN RANGE LPAREN NUMBER RPAREN COLON LBRACE stmts RBRACE
+    (8) if -> . IF expression COLON LBRACE stmts RBRACE elif
+    (13) while -> . WHILE expression COLON LBRACE stmts RBRACE
+    (16) expression -> . expression PLUS term
+    (17) expression -> . expression MINUS term
+    (18) expression -> . expression GE term
+    (19) expression -> . expression EQ term
+    (20) expression -> . expression NE term
+    (21) expression -> . expression LT term
+    (22) expression -> . expression LE term
+    (23) expression -> . expression GT term
+    (24) expression -> . term
+    (25) term -> . term TIMES factor
+    (26) term -> . term DIVIDE factor
+    (27) term -> . factor
+    (28) factor -> . NUMBER
+    (29) factor -> . ID
+    (30) factor -> . LPAREN expression RPAREN
+
+    RBRACE          shift and go to state 72
+    ID              shift and go to state 9
+    FOR             shift and go to state 10
+    IF              shift and go to state 13
+    WHILE           shift and go to state 14
+    NUMBER          shift and go to state 12
+    LPAREN          shift and go to state 11
+
+    stmt                           shift and go to state 3
+    assignment                     shift and go to state 4
+    for                            shift and go to state 5
+    if                             shift and go to state 6
+    while                          shift and go to state 7
+    expression                     shift and go to state 8
+    term                           shift and go to state 15
+    factor                         shift and go to state 16
+
+state 70
+
+    (9) elif -> ELIF expression COLON LBRACE . stmts RBRACE elif
+    (1) stmts -> . stmts stmt
+    (2) stmts -> . empty
+    (31) empty -> .
+
+    RBRACE          reduce using rule 31 (empty -> .)
+    ID              reduce using rule 31 (empty -> .)
+    FOR             reduce using rule 31 (empty -> .)
+    IF              reduce using rule 31 (empty -> .)
+    WHILE           reduce using rule 31 (empty -> .)
+    NUMBER          reduce using rule 31 (empty -> .)
+    LPAREN          reduce using rule 31 (empty -> .)
+
+    stmts                          shift and go to state 73
+    empty                          shift and go to state 2
+
+state 71
+
+    (11) else -> ELSE COLON LBRACE stmts . RBRACE
+    (1) stmts -> stmts . stmt
+    (3) stmt -> . assignment
+    (4) stmt -> . for
+    (5) stmt -> . if
+    (6) stmt -> . while
+    (7) stmt -> . expression
+    (15) assignment -> . ID ASSIGN expression
+    (14) for -> . FOR ID IN RANGE LPAREN NUMBER RPAREN COLON LBRACE stmts RBRACE
+    (8) if -> . IF expression COLON LBRACE stmts RBRACE elif
+    (13) while -> . WHILE expression COLON LBRACE stmts RBRACE
+    (16) expression -> . expression PLUS term
+    (17) expression -> . expression MINUS term
+    (18) expression -> . expression GE term
+    (19) expression -> . expression EQ term
+    (20) expression -> . expression NE term
+    (21) expression -> . expression LT term
+    (22) expression -> . expression LE term
+    (23) expression -> . expression GT term
+    (24) expression -> . term
+    (25) term -> . term TIMES factor
+    (26) term -> . term DIVIDE factor
+    (27) term -> . factor
+    (28) factor -> . NUMBER
+    (29) factor -> . ID
+    (30) factor -> . LPAREN expression RPAREN
+
+    RBRACE          shift and go to state 74
+    ID              shift and go to state 9
+    FOR             shift and go to state 10
+    IF              shift and go to state 13
+    WHILE           shift and go to state 14
+    NUMBER          shift and go to state 12
+    LPAREN          shift and go to state 11
+
+    stmt                           shift and go to state 3
+    assignment                     shift and go to state 4
+    for                            shift and go to state 5
+    if                             shift and go to state 6
+    while                          shift and go to state 7
+    expression                     shift and go to state 8
+    term                           shift and go to state 15
+    factor                         shift and go to state 16
+
+state 72
+
+    (14) for -> FOR ID IN RANGE LPAREN NUMBER RPAREN COLON LBRACE stmts RBRACE .
+
+    ID              reduce using rule 14 (for -> FOR ID IN RANGE LPAREN NUMBER RPAREN COLON LBRACE stmts RBRACE .)
+    FOR             reduce using rule 14 (for -> FOR ID IN RANGE LPAREN NUMBER RPAREN COLON LBRACE stmts RBRACE .)
+    IF              reduce using rule 14 (for -> FOR ID IN RANGE LPAREN NUMBER RPAREN COLON LBRACE stmts RBRACE .)
+    WHILE           reduce using rule 14 (for -> FOR ID IN RANGE LPAREN NUMBER RPAREN COLON LBRACE stmts RBRACE .)
+    NUMBER          reduce using rule 14 (for -> FOR ID IN RANGE LPAREN NUMBER RPAREN COLON LBRACE stmts RBRACE .)
+    LPAREN          reduce using rule 14 (for -> FOR ID IN RANGE LPAREN NUMBER RPAREN COLON LBRACE stmts RBRACE .)
+    $end            reduce using rule 14 (for -> FOR ID IN RANGE LPAREN NUMBER RPAREN COLON LBRACE stmts RBRACE .)
+    RBRACE          reduce using rule 14 (for -> FOR ID IN RANGE LPAREN NUMBER RPAREN COLON LBRACE stmts RBRACE .)
+
+
+state 73
+
+    (9) elif -> ELIF expression COLON LBRACE stmts . RBRACE elif
+    (1) stmts -> stmts . stmt
+    (3) stmt -> . assignment
+    (4) stmt -> . for
+    (5) stmt -> . if
+    (6) stmt -> . while
+    (7) stmt -> . expression
+    (15) assignment -> . ID ASSIGN expression
+    (14) for -> . FOR ID IN RANGE LPAREN NUMBER RPAREN COLON LBRACE stmts RBRACE
+    (8) if -> . IF expression COLON LBRACE stmts RBRACE elif
+    (13) while -> . WHILE expression COLON LBRACE stmts RBRACE
+    (16) expression -> . expression PLUS term
+    (17) expression -> . expression MINUS term
+    (18) expression -> . expression GE term
+    (19) expression -> . expression EQ term
+    (20) expression -> . expression NE term
+    (21) expression -> . expression LT term
+    (22) expression -> . expression LE term
+    (23) expression -> . expression GT term
+    (24) expression -> . term
+    (25) term -> . term TIMES factor
+    (26) term -> . term DIVIDE factor
+    (27) term -> . factor
+    (28) factor -> . NUMBER
+    (29) factor -> . ID
+    (30) factor -> . LPAREN expression RPAREN
+
+    RBRACE          shift and go to state 75
+    ID              shift and go to state 9
+    FOR             shift and go to state 10
+    IF              shift and go to state 13
+    WHILE           shift and go to state 14
+    NUMBER          shift and go to state 12
+    LPAREN          shift and go to state 11
+
+    expression                     shift and go to state 8
+    stmt                           shift and go to state 3
+    assignment                     shift and go to state 4
+    for                            shift and go to state 5
+    if                             shift and go to state 6
+    while                          shift and go to state 7
+    term                           shift and go to state 15
+    factor                         shift and go to state 16
+
+state 74
+
+    (11) else -> ELSE COLON LBRACE stmts RBRACE .
+
+    ID              reduce using rule 11 (else -> ELSE COLON LBRACE stmts RBRACE .)
+    FOR             reduce using rule 11 (else -> ELSE COLON LBRACE stmts RBRACE .)
+    IF              reduce using rule 11 (else -> ELSE COLON LBRACE stmts RBRACE .)
+    WHILE           reduce using rule 11 (else -> ELSE COLON LBRACE stmts RBRACE .)
+    NUMBER          reduce using rule 11 (else -> ELSE COLON LBRACE stmts RBRACE .)
+    LPAREN          reduce using rule 11 (else -> ELSE COLON LBRACE stmts RBRACE .)
+    $end            reduce using rule 11 (else -> ELSE COLON LBRACE stmts RBRACE .)
+    RBRACE          reduce using rule 11 (else -> ELSE COLON LBRACE stmts RBRACE .)
+
+
+state 75
+
+    (9) elif -> ELIF expression COLON LBRACE stmts RBRACE . elif
+    (9) elif -> . ELIF expression COLON LBRACE stmts RBRACE elif
+    (10) elif -> . else
+    (11) else -> . ELSE COLON LBRACE stmts RBRACE
+    (12) else -> . empty
+    (31) empty -> .
+
+    ELIF            shift and go to state 59
+    ELSE            shift and go to state 61
+    ID              reduce using rule 31 (empty -> .)
+    FOR             reduce using rule 31 (empty -> .)
+    IF              reduce using rule 31 (empty -> .)
+    WHILE           reduce using rule 31 (empty -> .)
+    NUMBER          reduce using rule 31 (empty -> .)
+    LPAREN          reduce using rule 31 (empty -> .)
+    $end            reduce using rule 31 (empty -> .)
+    RBRACE          reduce using rule 31 (empty -> .)
+
+    elif                           shift and go to state 76
+    else                           shift and go to state 60
+    empty                          shift and go to state 62
+
+state 76
+
+    (9) elif -> ELIF expression COLON LBRACE stmts RBRACE elif .
+
+    ID              reduce using rule 9 (elif -> ELIF expression COLON LBRACE stmts RBRACE elif .)
+    FOR             reduce using rule 9 (elif -> ELIF expression COLON LBRACE stmts RBRACE elif .)
+    IF              reduce using rule 9 (elif -> ELIF expression COLON LBRACE stmts RBRACE elif .)
+    WHILE           reduce using rule 9 (elif -> ELIF expression COLON LBRACE stmts RBRACE elif .)
+    NUMBER          reduce using rule 9 (elif -> ELIF expression COLON LBRACE stmts RBRACE elif .)
+    LPAREN          reduce using rule 9 (elif -> ELIF expression COLON LBRACE stmts RBRACE elif .)
+    $end            reduce using rule 9 (elif -> ELIF expression COLON LBRACE stmts RBRACE elif .)
+    RBRACE          reduce using rule 9 (elif -> ELIF expression COLON LBRACE stmts RBRACE elif .)
+

@@ -1,0 +1,342 @@
+# # Yacc part
+# # based on PLY documents
+
+
+import ply.yacc as yacc
+from mylexer import tokens, lexer, reserved
+
+
+class Parser(object):
+    tokens = tokens
+    lexer = lexer
+    keywords = reserved.keys()
+    precedence = (
+        ('nonassoc', 'GE', 'GT', 'LE', 'LT', 'EQ', 'NE',),
+        ('left', 'TIMES', 'DIVIDE'),
+        ('left', 'PLUS', 'MINUS')
+    )
+
+    assign_symbols = ['=']
+    operation_symbols = ['+', '-', '*', '/', '==', '>', '>=', '<', '<=', '!=']
+
+    def __init__(self):
+        self.parser = yacc.yacc(module=self)
+        self.parse_tree = None
+        self.three_address_code = None
+        self.symbol_table = {}
+        self.tIndex = 0
+        self.lIndex = 0
+    
+    # Error rule for syntax errors
+    def p_error(self, p):
+        print("Syntax error in input!")
+
+
+    def p_stmts(self, p):
+        """
+        stmts : stmts stmt
+        | empty
+        """
+        if len(p) == 3: #stmts : stmts stmt
+            if not p[1]:
+                p[1] = []
+            p[0] = p[1] + [p[2]]
+            self.parse_tree = p[0]
+
+    def p_statement(self, p):
+        """
+        stmt : assignment
+        | for
+        | if
+        | while
+        | expression
+        """
+        p[0] = p[1]
+
+    def p_if(self, p):
+        """
+        if : IF expression COLON LBRACE stmts RBRACE elif
+        """
+        p[0] = list((p[1], p[2], p[5], p[7]))
+
+    def p_elif(self, p):
+        """
+        elif : ELIF expression COLON LBRACE stmts RBRACE elif
+        | else
+        """
+        if len(p) != 2:
+            p[0] = list((p[1], p[2], p[5], p[7]))
+        else:
+            p[0] = p[1]
+
+    def p_else(self, p):
+        """
+        else : ELSE COLON LBRACE stmts RBRACE
+        | empty
+        """
+        if len(p) != 2:
+            p[0] = list((p[1], p[4]))
+
+    def p_while(self, p):
+        """
+        while : WHILE expression COLON LBRACE stmts RBRACE
+        """
+        p[0] = list((p[1], p[2], p[5]))
+
+    def p_for(self, p):
+        """
+        for : FOR ID IN RANGE LPAREN NUMBER RPAREN COLON LBRACE stmts RBRACE
+        """
+        p[0] = list((p[1], p[2], p[6], p[10]))
+
+    def p_assignment(self, p):
+        """
+        assignment : ID ASSIGN expression
+        """
+        p[0] = list((p[2], p[1], p[3]))
+
+    def p_expr_operator(self, p):
+        """
+        expression : expression PLUS term
+        | expression MINUS term
+        | expression GE term
+        | expression EQ term
+        | expression NE term
+        | expression LT term
+        | expression LE term
+        | expression GT term
+        | term
+        """
+        if len(p) != 2:
+            p[0] = list([p[2], p[1], p[3]])
+        else:
+            p[0] = p[1]
+
+    def p_term(self,p):
+        """
+        term : term TIMES factor
+        | term DIVIDE factor
+        | factor
+        """
+        if len(p) != 2:
+            p[0] = list([p[2], p[1], p[3]])
+        else:
+            p[0] = p[1]
+
+    def p_factor(self,p):
+        """
+        factor : NUMBER
+        | ID
+        | LPAREN expression RPAREN
+        """
+        if len(p) != 2:
+            p[0] = p[2]
+        else:
+            p[0] = p[1]
+
+    def p_empty(self, p):
+        'empty :'
+        p[0] = None
+
+    # def parse(self, input_data):
+    #     self.parser.parse(input_data, lexer=self.lexer)
+    #     return self.parse_tree
+
+    def parsing(self, input_file):
+        python_program_code = ''
+        with open(input_file, 'r') as python_file:
+            python_program_code = python_file.read()
+
+        self.parser.parse(python_program_code, lexer=self.lexer)
+        return self.parse_tree
+
+    def get_yacc(self, instruction):
+        if type(instruction) != list:
+            return "", instruction
+
+        if instruction[0] in self.assign_symbols:
+            return self.yacc_assign(instruction)
+
+        elif instruction[0] in self.operation_symbols :
+            return self.yacc_operator(instruction)
+        elif instruction[0] == 'if':
+            return self.yacc_if_elif_else(instruction)
+        elif instruction[0] == 'while':
+            return self.yacc_while(instruction)
+        elif instruction[0] == 'for':
+            return self.yacc_for(instruction)
+        else:
+            raise Exception("Invalid instruction: %s" % str(instruction))
+
+    
+
+    def yacc_for(self, instruction):
+        id = instruction[1]
+        
+        end_number = instruction[2]
+        start_number = '0'
+        step = 1
+        
+        stmts = instruction[3]
+        statement_code = self.yacc_program(stmts)
+
+        start_label = self.labelindex_generator()
+        end_label = self.labelindex_generator()
+
+        if_code_body = ""
+
+        if id not in self.symbol_table:
+            if_code_body += f"float {id};\n"
+            self.symbol_table[id] = 'float'
+
+        if_code_body += f"{id} = {start_number};\n"
+        
+        operator = ''
+        if step > 0 :
+            operator = '<='
+        else:
+            operator = '>='
+
+        if_code_body += start_label+':\n' \
+                     +"if ("+id+" "+operator+" "+ str(end_number)+') goto '+end_label+";\n" \
+                     +statement_code+"\n" \
+                     +id+" += "+str(step)+";\n" \
+                     +"goto "+start_label+";\n" \
+                     +end_label+":\n"
+        return if_code_body, None
+
+   
+    def yacc_while(self, instruction):
+        condition = instruction[1]
+        statements = instruction[2]
+
+        condition_code, condition_root = self.get_yacc(condition)
+        statements_code = self.yacc_program(statements)
+
+        start_while_label = self.labelindex_generator()
+        end_while_label = self.labelindex_generator()
+
+        condition_code_repeat = condition_code.replace('float ', '')
+
+        while_code_body = start_while_label +':\n' \
+                    +"if (!" +condition_root+') goto '+end_while_label+'\n' \
+                    + statements_code +'\n' \
+                    +condition_code_repeat+'\n' \
+                    +"goto "+start_while_label+';\n' \
+                    +end_while_label+':\n'
+
+        return condition_code + while_code_body, None
+
+    def yacc_if_elif_else(self, instruction):      
+        stack = []
+        instruction_copy = instruction
+
+        #when we have several elif and else that are connected to an if
+        while instruction_copy:
+            new_condition = instruction_copy[0]
+
+            if new_condition == 'else':
+                stack.append({
+                    'condition_name': 'else',
+                    'statements_code': self.yacc_program(instruction_copy[1])
+                })
+                break #each if has jus one else (dangeling else is solved)
+
+            if new_condition == 'elif':
+                new_condition = 'else if'
+            stack.append({
+                'condition_name': 'else if', 
+                'condition_code': self.get_yacc(instruction_copy[1]),
+                'statements_code': self.yacc_program(instruction_copy[2])
+            })
+
+            instruction_copy = instruction_copy[3]
+
+        conditions_code = ""
+        statement_code = ""
+        if_ended_label = self.labelindex_generator()
+
+        #generating  address code for any elif or if (condition) that is  attached to an  if
+        for condition in stack:
+            condition_name = condition.get('condition_name')
+            if condition_name == 'else':
+                statement_code += f"{condition.get('statements_code')}\n"
+                continue
+            _condition_code, condition_root = condition.get('condition_code')
+            conditions_code += f"{_condition_code}\n"
+
+            statements_end = self.labelindex_generator()
+
+            statement_code += "if (!"+condition_root+") goto "+statements_end+";\n" \
+                            +condition.get('statements_code')+"\n" \
+                            +"goto "+if_ended_label+";\n" \
+                            +statements_end+":\n"
+
+        statement_code += if_ended_label+":;\n"
+        return conditions_code + statement_code, None
+
+    
+    
+
+
+    def yacc_operator(self, instruction):
+        leftHandSide = instruction[1]
+        rightHandSide = instruction[2]
+        operator = instruction[0]
+
+        lefHandSide_code, a_root = self.get_yacc(leftHandSide)
+        rightHandSide_code, b_root = self.get_yacc(rightHandSide)
+
+        t = self.tindex_generator() #temproraty variable in 3AddressCode
+
+        op_code = lefHandSide_code + rightHandSide_code
+        op_code += f"float {t} = {a_root} {operator} {b_root};\n"
+
+        return op_code, t
+    
+    
+
+    def yacc_assign(self, instruction):
+        lefHandSide = instruction[1]
+        rightHandSide = instruction[2]
+        operator = instruction[0]
+        if lefHandSide in self.symbol_table.keys():
+            type_of_id = ''
+        else:
+            type_of_id = 'float ' #because id could be int or float
+            self.symbol_table[lefHandSide] = 'float' #add type of new id to symbol table
+        rightHandSide_code, rightHandSide_root = self.get_yacc( rightHandSide)
+        code_str = type_of_id+" "+str(lefHandSide)+" "+operator+" "+str(rightHandSide_root)+";\n"
+        return rightHandSide_code + code_str, lefHandSide
+
+
+    def yacc_program(self, p):
+            if not p:
+                return "\n"
+            all_code = ""
+            for instruction in p:
+                instruction_code, root = self.get_yacc(instruction)
+                all_code += instruction_code
+            return all_code
+
+    def generate_tac(self):
+        body = self.yacc_program(self.parse_tree)
+        ctac = body
+        return ctac
+
+    def tindex_generator(self):
+        self.tIndex += 1
+        return "t%d" % self.tIndex
+
+    def labelindex_generator(self):
+        self.lIndex += 1
+        return "l%d" % self.lIndex
+
+
+if __name__ == "__main__":
+    p = Parser()
+    p.parsing('python_file.txt')
+    c_file = open('c_file.txt', 'w')
+    c_code = p.generate_tac()
+    c_file.write(c_code)
+    c_file.close()

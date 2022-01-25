@@ -1,0 +1,71 @@
+float t1 = 1 + 2;
+float  a = t1;
+float t2 = a > 0;
+
+float t3 = a < 1;
+
+float t4 = a <= 1;
+
+float t6 = a >= 1;
+
+float t8 = a == 1;
+
+float t10 = a != 1;
+
+if (!t2) goto l2;
+float  b = 2;
+
+goto l1;
+l2:
+if (!t3) goto l3;
+ b = 0;
+
+goto l1;
+l3:
+if (!t4) goto l4;
+float t5 = b - 1;
+ b = t5;
+
+goto l1;
+l4:
+if (!t6) goto l5;
+float t7 = b * 1;
+ b = t7;
+
+goto l1;
+l5:
+if (!t8) goto l6;
+float t9 = b / 1;
+ b = t9;
+
+goto l1;
+l6:
+if (!t10) goto l7;
+float t11 = b + 1;
+ b = t11;
+
+goto l1;
+l7:
+ b = 1;
+
+l1:;
+float  i = 0;
+i = 0;
+l8:
+if (i <= 10) goto l9;
+float t12 = a + 1;
+ a = t12;
+
+i += 1;
+goto l8;
+l9:
+float t13 = a < 100;
+l10:
+if (!t13) goto l11
+float t14 = b + 1;
+ b = t14;
+
+t13 = a < 100;
+
+goto l10;
+l11:
