@@ -1,0 +1,7 @@
+pro.y
+pro.tab.h
+pro.tab.c
+pro.l
+lex.yy.c
+cal.exe
+.vscode/
