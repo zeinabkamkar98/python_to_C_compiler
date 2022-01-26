@@ -7,9 +7,9 @@ from mylexer import tokens, lexer, reserved
 
 
 class Parser(object):
-    tokens = tokens
-    lexer = lexer
-    keywords = reserved.keys()
+    
+
+
     precedence = (
         ('nonassoc', 'GE', 'GT', 'LE', 'LT', 'EQ', 'NE',),
         ('left', 'TIMES', 'DIVIDE'),
@@ -20,6 +20,9 @@ class Parser(object):
     operation_symbols = ['+', '-', '*', '/', '==', '>', '>=', '<', '<=', '!=']
 
     def __init__(self):
+        self.tokens = tokens
+        self.lexer = lexer
+        self.keywords = reserved.keys()
         self.parser = yacc.yacc(module=self)
         self.parse_tree = None
         self.three_address_code = None
@@ -27,11 +30,7 @@ class Parser(object):
         self.tIndex = 0
         self.lIndex = 0
     
-    # Error rule for syntax errors
-    def p_error(self, p):
-        print("Syntax error in input!")
-
-
+    
     def p_stmts(self, p):
         """
         stmts : stmts stmt
@@ -138,9 +137,10 @@ class Parser(object):
         'empty :'
         p[0] = None
 
-    # def parse(self, input_data):
-    #     self.parser.parse(input_data, lexer=self.lexer)
-    #     return self.parse_tree
+    # Error rule for syntax errors
+    def p_error(self, p):
+        print("Syntax error in input!")
+
 
     def parsing(self, input_file):
         python_program_code = ''
@@ -150,27 +150,26 @@ class Parser(object):
         self.parser.parse(python_program_code, lexer=self.lexer)
         return self.parse_tree
 
-    def get_yacc(self, instruction):
+    def generate_code(self, instruction):
         if type(instruction) != list:
             return "", instruction
 
         if instruction[0] in self.assign_symbols:
-            return self.yacc_assign(instruction)
-
+            return self.assign_code(instruction)
         elif instruction[0] in self.operation_symbols :
-            return self.yacc_operator(instruction)
+            return self.operator_code(instruction)
         elif instruction[0] == 'if':
-            return self.yacc_if_elif_else(instruction)
+            return self.if_code(instruction)
         elif instruction[0] == 'while':
-            return self.yacc_while(instruction)
+            return self.while_code(instruction)
         elif instruction[0] == 'for':
-            return self.yacc_for(instruction)
+            return self.for_code(instruction)
         else:
             raise Exception("Invalid instruction: %s" % str(instruction))
 
     
 
-    def yacc_for(self, instruction):
+    def for_code(self, instruction):
         id = instruction[1]
         
         end_number = instruction[2]
@@ -178,7 +177,7 @@ class Parser(object):
         step = 1
         
         stmts = instruction[3]
-        statement_code = self.yacc_program(stmts)
+        statement_code = self.program(stmts)
 
         start_label = self.labelindex_generator()
         end_label = self.labelindex_generator()
@@ -206,12 +205,12 @@ class Parser(object):
         return if_code_body, None
 
    
-    def yacc_while(self, instruction):
+    def while_code(self, instruction):
         condition = instruction[1]
         statements = instruction[2]
 
-        condition_code, condition_root = self.get_yacc(condition)
-        statements_code = self.yacc_program(statements)
+        condition_code, condition_root = self.generate_code(condition)
+        statements_code = self.program(statements)
 
         start_while_label = self.labelindex_generator()
         end_while_label = self.labelindex_generator()
@@ -227,7 +226,7 @@ class Parser(object):
 
         return condition_code + while_code_body, None
 
-    def yacc_if_elif_else(self, instruction):      
+    def if_code(self, instruction):      
         stack = []
         instruction_copy = instruction
 
@@ -238,7 +237,7 @@ class Parser(object):
             if new_condition == 'else':
                 stack.append({
                     'condition_name': 'else',
-                    'statements_code': self.yacc_program(instruction_copy[1])
+                    'statements_code': self.program(instruction_copy[1])
                 })
                 break #each if has jus one else (dangeling else is solved)
 
@@ -246,8 +245,8 @@ class Parser(object):
                 new_condition = 'else if'
             stack.append({
                 'condition_name': 'else if', 
-                'condition_code': self.get_yacc(instruction_copy[1]),
-                'statements_code': self.yacc_program(instruction_copy[2])
+                'condition_code': self.generate_code(instruction_copy[1]),
+                'statements_code': self.program(instruction_copy[2])
             })
 
             instruction_copy = instruction_copy[3]
@@ -279,13 +278,13 @@ class Parser(object):
     
 
 
-    def yacc_operator(self, instruction):
+    def operator_code(self, instruction):
         leftHandSide = instruction[1]
         rightHandSide = instruction[2]
         operator = instruction[0]
 
-        lefHandSide_code, a_root = self.get_yacc(leftHandSide)
-        rightHandSide_code, b_root = self.get_yacc(rightHandSide)
+        lefHandSide_code, a_root = self.generate_code(leftHandSide)
+        rightHandSide_code, b_root = self.generate_code(rightHandSide)
 
         t = self.tindex_generator() #temproraty variable in 3AddressCode
 
@@ -296,7 +295,7 @@ class Parser(object):
     
     
 
-    def yacc_assign(self, instruction):
+    def assign_code(self, instruction):
         lefHandSide = instruction[1]
         rightHandSide = instruction[2]
         operator = instruction[0]
@@ -305,24 +304,23 @@ class Parser(object):
         else:
             type_of_id = 'float ' #because id could be int or float
             self.symbol_table[lefHandSide] = 'float' #add type of new id to symbol table
-        rightHandSide_code, rightHandSide_root = self.get_yacc( rightHandSide)
+        rightHandSide_code, rightHandSide_root = self.generate_code( rightHandSide)
         code_str = type_of_id+" "+str(lefHandSide)+" "+operator+" "+str(rightHandSide_root)+";\n"
         return rightHandSide_code + code_str, lefHandSide
 
 
-    def yacc_program(self, p):
+    def program(self, p):
             if not p:
                 return "\n"
             all_code = ""
             for instruction in p:
-                instruction_code, root = self.get_yacc(instruction)
+                instruction_code, root = self.generate_code(instruction)
                 all_code += instruction_code
             return all_code
 
-    def generate_tac(self):
-        body = self.yacc_program(self.parse_tree)
-        ctac = body
-        return ctac
+    def generate_three_address_code(self):
+        three_address_code_body = self.program(self.parse_tree)
+        return three_address_code_body
 
     def tindex_generator(self):
         self.tIndex += 1
@@ -337,6 +335,6 @@ if __name__ == "__main__":
     p = Parser()
     p.parsing('python_file.txt')
     c_file = open('c_file.txt', 'w')
-    c_code = p.generate_tac()
+    c_code = p.generate_three_address_code()
     c_file.write(c_code)
     c_file.close()
