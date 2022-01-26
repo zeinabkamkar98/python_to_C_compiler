@@ -35,7 +35,6 @@ tokens = tokens + list(reserved.values())
 
 
 # Regular expression rules for simple tokens
-
 t_PLUS    = r'\+'
 t_MINUS   = r'-'
 t_TIMES   = r'\*'
@@ -83,8 +82,7 @@ def t_error(t):
     print("Illegal character '%s'" % t.value[0])
     t.lexer.skip(1)
 
-# Build the lexer
-lexer = lex.lex()
+
 
 def write_in_token_file(output_token_file, tokens_list):
     with open(output_token_file, 'a+') as token_file:
@@ -99,6 +97,10 @@ def write_in_token_file(output_token_file, tokens_list):
             else:
                 add_end_of_line = True
             token_file.write(token)
+
+
+# Build the lexer
+lexer = lex.lex()
 
 if __name__ == "__main__":
     with open('token_file.txt', 'r+') as token_file:
@@ -119,5 +121,6 @@ if __name__ == "__main__":
         tokens_list.append(tokenText)
         # print(t.type, t.value, t.lineno, t.lexpos)
     write_in_token_file('token_file.txt', tokens_list)
+    
     token_file.close()
     python_file.close()
