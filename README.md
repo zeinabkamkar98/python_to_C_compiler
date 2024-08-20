@@ -16,7 +16,7 @@ sudo apt-get update -y
 ```
 * install ply on your system
 ```
-sudo pip install python3-ply -y
+pip install python3-ply -y
 ```
 * Run compile.py
 ```
